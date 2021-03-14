@@ -1,0 +1,11 @@
+CHIP pracMux {
+
+    IN  a, b, sel;
+    OUT out;
+    PARTS:
+	Nand(a=b ,b=sel ,out=BnandSEL );
+	Nand(a=sel ,b=sel ,out=SELnandSEL );
+	Nand(a=SELnandSEL ,b=a ,out=SELb );
+	Nand(a=BnandSEL ,b=SELb ,out=out );
+	
+}

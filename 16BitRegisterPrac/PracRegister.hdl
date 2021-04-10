@@ -1,0 +1,57 @@
+CHIP PracRegister{
+IN in[16], load;
+OUT out[16];
+
+PARTS:
+
+
+Mux(a= dout0 , b= in[0]   , sel= load  , out=out0 );
+DFF(in = out0, out =dout0, out = out[0]);
+
+Mux(a= dout1 , b= in[1]   , sel= load  , out=out1 );
+DFF(in = out1, out =dout1, out = out[1]);
+
+Mux(a= dout2 , b= in[2]   , sel= load  , out=out2 );
+DFF(in = out2, out =dout2, out = out[2]);
+
+Mux(a= dout3 , b= in[3]   , sel= load  , out=out3 );
+DFF(in = out3, out =dout3, out = out[3]);
+
+Mux(a= dout4 , b= in[4]   , sel= load  , out=out4 );
+DFF(in = out4, out =dout4, out = out[4]);
+
+Mux(a= dout5 , b= in[5]   , sel= load  , out=out5 );
+DFF(in = out5, out =dout5, out = out[5]);
+
+Mux(a= dout6 , b= in[6]   , sel= load  , out=out6 );
+DFF(in = out6, out =dout6, out = out[6]);
+
+Mux(a= dout7 , b= in[7]   , sel= load  , out=out7 );
+DFF(in = out7, out =dout7, out = out[7]);
+
+Mux(a= dout8 , b= in[8]   , sel= load  , out=out8 );
+DFF(in = out8, out =dout8, out = out[8]);
+
+Mux(a= dout9 , b= in[9]   , sel= load  , out=out9 );
+DFF(in = out9, out =dout9, out = out[9]);
+
+Mux(a= douta , b= in[10]   , sel= load  , out=outa );
+DFF(in = outa, out =douta, out = out[10]);
+
+Mux(a= doutb , b= in[11]   , sel= load  , out=outb );
+DFF(in = outb, out =doutb, out = out[11]);
+
+Mux(a= doutc , b= in[12]   , sel= load  , out=outc );
+DFF(in = outc, out =doutc, out = out[12]);
+
+Mux(a= doutd , b= in[13]   , sel= load  , out=outd );
+DFF(in = outd, out =doutd, out = out[13]);
+
+Mux(a= doute , b= in[14]   , sel= load  , out=oute );
+DFF(in = oute, out =doute, out = out[14]);
+
+Mux(a= doutf , b= in[15]   , sel= load  , out=outf );
+DFF(in = outf, out =doutf, out = out[15]);
+
+
+}

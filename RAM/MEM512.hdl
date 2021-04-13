@@ -1,0 +1,22 @@
+CHIP MEM512 {
+	IN in[16], load, address[9];
+	OUT out[16];
+	PARTS:
+	DMux8Way(in=load, sel=address[6..8], a=loada, b=loadb, c=loadc, d=loadd, e=loade, f=loadf, g=loadg, h=loadh);
+	
+	/**passing the required 6 bits of address bus MEM64 needs to its input
+	 * using the added three bits to select a MEM64 module
+	 */
+	 
+	//DMux8Way is only to select where the load is routed
+	MEM64(in=in, load=loada, address=address[0..5], out=outa);
+	MEM64(in=in, load=loadb, address=address[0..5], out=outb);
+	MEM64(in=in, load=loadc, address=address[0..5], out=outc);
+	MEM64(in=in, load=loadd, address=address[0..5], out=outd);
+	MEM64(in=in, load=loade, address=address[0..5], out=oute);
+	MEM64(in=in, load=loadf, address=address[0..5], out=outf);
+	MEM64(in=in, load=loadg, address=address[0..5], out=outg);
+	MEM64(in=in, load=loadh, address=address[0..5], out=outh);
+	Mux8Way16(a=outa, b=outb, c=outc, d=outd, e=oute, f=outf, g=outg, h=outh, sel=address[6..8], out=out);
+}	
+	

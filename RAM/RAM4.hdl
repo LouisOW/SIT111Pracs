@@ -1,0 +1,12 @@
+CHIP RAM4 {
+    IN in[16], load, address[2];
+    OUT out[16];
+
+    PARTS:
+    DMux4Way (in=load, sel=address, a=loadA, b=loadB, c=loadC, d=loadD);
+    Register (in=in, load=loadA, out=registerA);
+    Register (in=in, load=loadB, out=registerB);
+    Register (in=in, load=loadC, out=registerC);
+    Register (in=in, load=loadD, out=registerD);
+    Mux4Way16 (a=registerA, b=registerB, c=registerC, d=registerD, sel=address, out=out);
+}

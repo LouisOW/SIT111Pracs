@@ -1,0 +1,20 @@
+CHIP MEM64 {
+    IN in[16], load, address[6];
+    OUT out[16];
+
+    PARTS:
+	// 3..5 points to the first 3 bits of the 6 bit address 111-000
+	// this selects which group of registers (MEM8) to point to
+	// The last three bits select the register inside e.g. 000-000 points to the first MEM8 then the 1st register inside that MEM8
+	DMux8Way(in=load, sel=address[3..5], a=loada, b=loadb, c=loadc, d=loadd, e=loade, f=loadf, g=loadg, h=loadh);
+	MEM8(in=in, load=loada, address=address[0..2], out=outa);
+	MEM8(in=in, load=loadb, address=address[0..2], out=outb);
+	MEM8(in=in, load=loadc, address=address[0..2], out=outc);
+	MEM8(in=in, load=loadd, address=address[0..2], out=outd);
+	MEM8(in=in, load=loade, address=address[0..2], out=oute);
+	MEM8(in=in, load=loadf, address=address[0..2], out=outf);
+	MEM8(in=in, load=loadg, address=address[0..2], out=outg);
+	MEM8(in=in, load=loadh, address=address[0..2], out=outh);
+	Mux8Way16(a=outa, b=outb, c=outc, d=outd, e=oute, f=outf, g=outg, h=outh, sel=address[3..5], out=out);	
+}
+// 

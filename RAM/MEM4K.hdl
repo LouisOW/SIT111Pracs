@@ -1,0 +1,27 @@
+CHIP MEM4K {
+	IN in[16], load, address[12]; //log▼2(4096)=nBits=12
+	
+	OUT out[16];
+	PARTS:
+	/*using dMux to route load to trigger a write on tik
+	 *MUST have all other chips in folder to run because build on my custom RAM4
+	 *
+	 */
+	DMux8Way(in=load, sel=address[9..11], a=loada, b=loadb, c=loadc, d=loadd, e=loade, f=loadf, g=loadg, h=loadh);
+	
+	/**passing the required 9 bits of address bus MEM64 needs to its input
+	 * using the added three bits to select a MEM64 module
+	 */
+	 
+	//DMux8Way is only to select where the load is routed
+	MEM512(in=in, load=loada, address=address[0..8], out=outa);
+	MEM512(in=in, load=loadb, address=address[0..8], out=outb);
+	MEM512(in=in, load=loadd, address=address[0..8], out=outd);
+	MEM512(in=in, load=loade, address=address[0..8], out=oute);
+	MEM512(in=in, load=loadc, address=address[0..8], out=outc);
+	MEM512(in=in, load=loadf, address=address[0..8], out=outf);
+	MEM512(in=in, load=loadg, address=address[0..8], out=outg);
+	MEM512(in=in, load=loadh, address=address[0..8], out=outh);
+	Mux8Way16(a=outa, b=outb, c=outc, d=outd, e=oute, f=outf, g=outg, h=outh, sel=address[9..11], out=out);
+}	
+	

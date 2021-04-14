@@ -28,6 +28,7 @@ CHIP ALU {
 	//zr if out==0
 	Or8Way(in=firstHalf, out=zrLeft);
 	Or8Way(in=secondHalf, out=zrRight);
-	Or(a=zrLeft,b=zrRight,out=Postitive);
-	Not(in=Postitive,out=zr);
+	Or(a=zrLeft,b=zrRight,out=not0);
+	//out not(not( 0 )) == 0
+	Not(in=not0,out=zr);
 }

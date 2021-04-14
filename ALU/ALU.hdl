@@ -1,0 +1,33 @@
+CHIP ALU {
+    IN  
+        x[16], y[16],  // 16-bit inputs        
+        zx,nx,zy,ny,f,no;
+    OUT 
+        out[16], zr,ng;
+    PARTS:
+	//zx
+	Mux16(a=x, sel=zx, out=outZX); //ZX Zero X	
+	//nx
+	Not16(in=outZX,out=NotX);	// negate x&y
+	Mux16(a=outZX,b=NotX,sel=nx,out=outNX); // if nx, negate x
+	//zy
+	Mux16(a=y,sel=zy, out=outZY); //ZY Zero Y
+	//ny
+	Not16(in=outZY,out=NotY); // negate x&y
+	Mux16(a=outZY,b=NotY,sel=ny,out=outNY); // if ny, negate x	
+	//f
+	And16(a=outNX, b=outNY,out=andXY);//f=0
+	Add16(a=outNX, b=outNY,out=addXY);//f=1
+	Mux16(a=andXY, b=addXY,sel=f,out=fOut);	
+	//no
+	Not16(in=fOut,out=negateOut);
+	Mux16(a=fOut,b=negateOut,sel=no,out=out, out[15]=out15, out[0..7]=firstHalf, out[8..15]=secondHalf);
+	
+	//ng if out < 0
+	And(a=out15,b=true,out=ng);
+	//zr if out==0
+	Or8Way(in=firstHalf, out=zrLeft);
+	Or8Way(in=secondHalf, out=zrRight);
+	Or(a=zrLeft,b=zrRight,out=Postitive);
+	Not(in=Postitive,out=zr);
+}

@@ -1,0 +1,11 @@
+//My implementation of the hack computer using ROM, RAM and CPU
+
+CHIP Computer {
+
+    IN reset;
+
+    PARTS:
+    Memory(in=CPUdataOUT ,load=loadWrite, address=addM,out=data);
+	CPU(inM=data, instruction= inst , reset=reset , outM=CPUdataOUT, writeM=loadWrite, addressM=addM, pc=pcOut );
+	ROM32K(address=pcOut, out=inst);
+}
